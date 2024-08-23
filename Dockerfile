@@ -55,10 +55,10 @@ ARG container_user_uid=1002
 ARG container_user_gid=1001
 
 # install packages and create user
-RUN apk -q update && \
-    apk add -q --no-cache unzip wget && \
-    addgroup -g ${container_user_gid} ${container_user_group} && \
-    adduser -D -s /bin/sh -u ${container_user_uid} -G ${container_user_group} -h /home/${container_user} ${container_user}
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends sudo && \
+    groupadd -g ${container_user_gid} ${container_user_group} && \
+    useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/bash -m ${container_user}
 
 # set working directory for the user
 WORKDIR /home/${container_user}
